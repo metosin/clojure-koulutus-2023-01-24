@@ -1,0 +1,18 @@
+---
+version: '3.8'
+
+
+services:
+  db:
+    image: metosin/training-musicbrainz-db:latest
+    init: true
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+
+  server:
+    image: metosin/training-musicbrainz-server:latest
+    init: true
+    restart: always
+    ports:
+      - 127.0.0.1:9000:8080

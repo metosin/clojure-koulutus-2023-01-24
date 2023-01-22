@@ -1,0 +1,17 @@
+;; shadow-cljs configuration
+{:deps     {:aliases [:dev :web :server :test :exercises]}
+ :builds   {:web  {:target     :browser
+                   :output-dir "public/js"
+                   :asset-path "js"
+                   :modules    {:main {:entries [koulutus.web.main]}}
+                   :devtools   {:after-load koulutus.web.main/start}}
+            :node {:target     :node-library
+                   :output-to  "target/node/index.js"
+                   :output-dir "target/node/js"
+                   :exports    {:hello user/hello}}
+            :test {:target     :node-test
+                   :output-to  "target/test/index.js"
+                   :output-dir "target/test/js"
+                   :autorun    true}}
+ :dev-http {8000 {:root      "public"
+                  :proxy-url "http://localhost:9000"}}}
