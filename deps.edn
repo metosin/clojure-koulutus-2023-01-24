@@ -23,7 +23,9 @@
 
            :web         {:extra-paths ["src/web"]
                          :extra-deps  {org.clojure/clojurescript {:mvn/version "1.11.60"}
-                                       reagent/reagent           {:mvn/version "1.1.1"}}}
+                                       reagent/reagent           {:mvn/version "1.1.1"}
+                                       funcool/promesa           {:mvn/version "10.0.594"}
+                                       lambdaisland/fetch        {:mvn/version "1.2.69"}}}
 
            :exercises   {:extra-paths ["src/exercises"]}
 

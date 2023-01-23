@@ -1,15 +1,14 @@
-(ns koulutus.web.welcome-view
+(ns koulutus.web.view.welcome
   (:require [clojure.string :as str]
-            [reagent.core :as r]
-            [reagent.dom :as rdom]))
+            [koulutus.web.state :refer [app-state]]))
+
+(defn get-counter []
+  (-> @app-state :view :welcome :counter (or 0)))
 
 
-(defonce state (r/atom {:counter 0}))
-
-
-(defn add-like [e]
-  (.preventDefault e)
-  (swap! state update :counter inc))
+(defn on-add-counter [e]
+  (swap! app-state update-in [:view :welcome :counter] inc)
+  nil)
 
 
 (defn icon
@@ -19,7 +18,7 @@
     (-> icon-name (name) (str/replace "-" "_"))]))
 
 
-(defn welcome-view []
+(defn welcome-view [_]
   [:div.container
    [:h1
     "Tervetuloa"
@@ -27,7 +26,7 @@
    [:div
     [:a {:href     "#"
          :role     "button"
-         :on-click add-like}
+         :on-click on-add-counter}
      [icon :thumb-up]]
     [:span {:style {:padding-inline "0.3em"}} "Likes:"]
-    [:strong (-> @state :counter)]]])
+    [:strong (get-counter)]]])

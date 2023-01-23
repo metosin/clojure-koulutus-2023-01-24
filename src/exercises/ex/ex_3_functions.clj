@@ -1,5 +1,4 @@
-(ns ex.ex-3-functions
-  (:require [ex.ex-2-collections]))
+(ns ex.ex-3-functions)
 
 
 (type println)
@@ -59,29 +58,85 @@ println
 (ifn? +)
 ;; => true
 
-ex.ex-2-collections/album
-;; => {:album "Right On"
-;;     :artist "The Supremes"
-;;     :released "1970-04-01"}
 
+;;
+;; Funktioiden yhdisteleminen
+;;
 
-(fn? ex.ex-2-collections/album)
-;; => false
-(ifn? ex.ex-2-collections/album)
-;; => true
+; comp
 
-(ex.ex-2-collections/album :artist)
-;; => "The Supremes"
+(defn add-one [v] (+ v 1))
+(defn make-double [v] (* v 2))
 
-(ex.ex-2-collections/album :price)
-;; => nil
+(make-double (add-one 2))
+;; => 6
 
-(ex.ex-2-collections/album :price "$0.00")
-;; => "$0.00"
+(def add-one-and-double (comp make-double add-one))
 
-(ifn? :artist)
-;; => true
+(add-one-and-double 2)
+;; => 6
 
-(:artist ex.ex-2-collections/album)
-;; => "The Supremes"
+; partial
 
+(def multiply-by-2 (partial * 2))
+
+(multiply-by-2 3)
+;; => 6
+
+; juxt
+
+(def parse-lat-lon (juxt :latitude :longitude))
+
+(parse-lat-lon {:continent "Europe"
+                :latitude  60.214444
+                :longitude 24.880800
+                :timezone  "GMT+02:00"})
+;; => [60.214444 24.8808]
+
+(->> (range 10)
+     (map (juxt identity pos? neg? odd? even?)))
+;; => ([0 false false false true] 
+;;     [1 true false true false] 
+;;     [2 true false false true] 
+;;     [3 true false true false]
+;;     ...
+
+; some-fn
+
+(defn handle-ping [request]
+  (when (= (:uri request) "/api/ping")
+    {:status 200
+     :body   "Pong"}))
+
+(defn handle-time [request]
+  (when (= (:uri request) "/api/time")
+    {:status 200
+     :body   (str "time is " (System/currentTimeMillis))}))
+
+(defn not-found [request]
+  {:status 404
+   :body   (str "No route for " (:uri request))})
+
+(def handler (some-fn handle-ping handle-time not-found))
+
+(handler {:uri "/api/ping"})
+;; => {:status 200, :body "Pong"}
+
+(handler {:uri "/api/foo"})
+;; => {:status 404, :body "No route for /api/foo"}
+
+;; apply
+
+; Ongelma: funktio ottaa erillisiä parametrejä, kuten esim str
+;          mutta meillä on seq
+; Eli haluaisimme kutsua:
+;   (str 1 2 3 4)
+; mutta:
+
+(str [1 2 3 4])
+;; => "[1 2 3 4]"
+
+(apply str [1 2 3 4])
+;; => "1234"
+
+; Lisää: https://clojure.org/guides/higher_order_functions
