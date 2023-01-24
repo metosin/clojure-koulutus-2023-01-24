@@ -299,7 +299,7 @@ users
 ;;     ...
 ;;
 ;; Hae kaikki käyttäjät jotka on enintään x km etäisyydellä tästä paikasta.
-;; Helpotuksena todettakoon että `ex.ex-5-using-collections.geo` nimiavaruudessa
+;; Helpotuksena todettakoon että `ex.ex-6-using-collections.geo` nimiavaruudessa
 ;; on funktio jolla voi laskea kahden pisteen välisen etäisyyden kilometreinä.
 ;;
 

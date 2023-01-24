@@ -1,5 +1,6 @@
 (ns ex.ex-5-using-collections)
 
+
 ; Hyvä pitää käsillä:
 ;   https://clojure.org/api/cheatsheet
 
@@ -25,11 +26,11 @@
 
 (def my-vector [1 2 3])
 
-(conj my-vector 3)
-;; => [1 2 3]
+(conj my-vector 4)
+;; => [1 2 3 4]
 
 my-vector
-;; => [1 2]
+;; => [1 2 3]
 
 
 ;;
@@ -161,11 +162,23 @@ album
 ;; *-in versiot:
 ;;
 ;; assoc  -> assoc-in
-;; dissoc -> dissoc-in
 ;; update -> update-in
 ;;
 ;; Ottavat avaimen sijasta seq avaimia, pureutuu sisäkkäiseen tietorakenteeseen
 ;; Näistä lisää myöhemmin.
+
+(update-in {:user {:name    "Jarppe"
+                   :email   "jarrpe@gmail.com"
+                   :address {:country "finland"}}}
+           [:user :address]
+           merge
+           {:street "koelaitoksenkatu"
+            :city   "tampere"})
+;; => {:user {:name "Jarppe",
+;;            :email "jarrpe@gmail.com", 
+;;            :address {:country "finland", 
+;;                      :street "koelaitoksenkatu", 
+;;                      :city "tampere"}}}
 
 (keys album)
 ;; => (:album :artist :released)
@@ -304,6 +317,7 @@ genres
 (album :price "$0.00")
 ;; => "$0.00"
 
+
 ;; Keyword on funktio mapille:
 
 (ifn? :released)
@@ -324,3 +338,29 @@ genres
 
 (genres "death metal")
 ;; => nil
+
+
+(sort-by (juxt :album :genre)
+         (shuffle
+          [{:genre "jazz"
+            :album 1}
+           {:genre "jazz"
+            :album 2}
+           {:genre "aito jazz"
+            :album 3}]))
+
+
+(sort-by (juxt :genre :album)
+         (shuffle
+          [{:genre "jazz"
+            :album 1}
+           {:genre "jazz"
+            :album 2}
+           {:genre "aito jazz"
+            :album 3}]))
+
+
+(contains? [1 2 3] 3)
+;; => false
+
+
