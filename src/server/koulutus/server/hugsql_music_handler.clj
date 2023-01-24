@@ -9,7 +9,8 @@
             [reitit.ring.middleware.muuntaja :as muuntaja]
             [reitit.ring.middleware.parameters :as parameters]
             [reitit.ring.middleware.exception :as exception]
-            [koulutus.server.db :as db]))
+            [koulutus.server.db :as db]
+            [jsonista.core :as json]))
 
 
 (declare sql-get-albums)
@@ -100,6 +101,9 @@
 (comment
 
   (require '[koulutus.server.db :as db])
+  (require '[jsonista.core :as json])
+
+
   (with-open [ds (db/make-datasource)]
     (-> (handler {:request-method :get
                   :uri            "/api/music/album"
@@ -108,8 +112,8 @@
                                    "limit"      "2"}
                   :ds             ds})
         :body
-        (.readAllBytes)
-        (String.)))
+        (json/read-value)))
+
 
   (let [album_id "7080521d-28a0-4e39-8a44-526ae8981ccd"]
     (with-open [ds (db/make-datasource)]
@@ -118,8 +122,8 @@
                         :headers        {"Accepts" "application/json"}
                         :ds             ds})
               :body
-              (.readAllBytes)
-              (String.))))
+              (json/read-value))))
+
 
   (with-open [ds (db/make-datasource)]
     (some-> (handler {:request-method :get
@@ -127,8 +131,7 @@
                       :headers        {"Accepts" "application/json"}
                       :ds             ds})
             :body
-            (.readAllBytes)
-            (String.)))
+            (json/read-value)))
 
 
   ;
