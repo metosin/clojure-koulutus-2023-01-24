@@ -13,6 +13,9 @@
 - [ReFrame](https://day8.github.io/re-frame/re-frame/)
 - [Reagent](https://reagent-project.github.io/)
 - [Helix](https://github.com/lilactown/helix)
+- [Awesome Clojure libs](https://github.com/mbuczko/awesome-clojure)
+- [Awesome Clojure libs also](https://github.com/razum2um/awesome-clojure)
+- [Awesome ClojureScript libs](https://github.com/hantuzun/awesome-clojurescript)
 
 ## Dataset
 
