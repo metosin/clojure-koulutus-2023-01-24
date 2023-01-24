@@ -8,6 +8,11 @@
 - [ClojureScript API](http://cljs.github.io/api/) ClojureScript API docs
 - [Google Closure API](https://google.github.io/closure-library/api/) Commonly used Closure lib
 - [Shadow-cljs](https://shadow-cljs.github.io/docs/UsersGuide.html) Shadow-cljs build tool docs
+- [Clojure cheatsheet](https://clojure.org/api/cheatsheet)
+- [ClojureScript cheatsheet](https://cljs.info/cheatsheet/)
+- [ReFrame](https://day8.github.io/re-frame/re-frame/)
+- [Reagent](https://reagent-project.github.io/)
+- [Helix](https://github.com/lilactown/helix)
 
 ## Dataset
 
