@@ -1,5 +1,6 @@
 (ns ex.ex-9-flow-control)
 
+
 (if (odd? 42)
   "That's strange"
   "All is good")
@@ -45,4 +46,19 @@
     (> x 10) "More than 10"
     :else "Something else"))
 ;; => "Something else"
+
+;;
+;; try/catch/finally
+;;
+
+(try
+  (/ 1 0)
+  (catch java.io.IOException e
+    (str "io error: " (.getMessage e)))
+  (catch java.lang.ArithmeticException e
+    (str "bad math:" (.getMessage e)))
+  (finally
+    (println "it's finally over")))
+;; prints: it's finally over
+;; => "bad math:Divide by zero"
 

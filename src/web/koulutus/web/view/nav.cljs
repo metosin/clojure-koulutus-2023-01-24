@@ -10,4 +10,6 @@
     [:li [:a {:href     "#"
               :on-click (nav/on-href "/")} "Etusivu"]]
     [:li [:a {:href     "#"
-              :on-click (nav/on-href "/albums")} "Albums"]]]])
+              :on-click (nav/on-href "/albums")} "Albums"]]
+    [:li [:a {:href     "#"
+              :on-click (nav/on-href "/artists")} "Artists"]]]])
