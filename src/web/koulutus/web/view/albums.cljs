@@ -1,6 +1,5 @@
 (ns koulutus.web.view.albums
-  (:require [goog.functions :refer [debounce]]
-            [promesa.core :as p]
+  (:require [promesa.core :as p]
             [lambdaisland.fetch :as fetch]
             [koulutus.web.state :refer [app-state]]))
 
@@ -13,19 +12,17 @@
   (apply swap! app-state update-in [:view :albums] f args))
 
 
-(def load-albums!
-  (debounce (fn [album-name]
-              (update-view-state! assoc :status :loading)
-              (-> (fetch/get "/api/music/album" {:accept       :json
-                                                 :content-type :json
-                                                 :query-params {:album_name album-name}})
-                  (p/then (fn [{:keys [status body]}]
-                            (update-view-state! merge (if (= status 200)
-                                                        {:status :ok
-                                                         :data   (js->clj body {:keywordize-keys true})}
-                                                        {:status :error
-                                                         :data   body}))))))
-            500))
+(defn load-albums! [album-name]
+  (update-view-state! assoc :status :loading)
+  (-> (fetch/get "/api/music/album" {:accept       :json
+                                     :content-type :json
+                                     :query-params {:album_name album-name}})
+      (p/then (fn [{:keys [status body]}]
+                (let [fetch-data   (js->clj body {:keywordize-keys true})
+                      fetch-status (if (#{200 201} status) :ok :error)]
+                  (update-view-state! assoc
+                                      :data fetch-data
+                                      :status fetch-status))))))
 
 
 (defn albums-list [{:keys [albums]}]
